@@ -1,8 +1,14 @@
-#include <QCoreApplication>
+#include"Tile.h"
+#include"Character.h"
+#include"Level.h"
+#include"AbstractUI.h"
+#include"DungeonCrawler.h"
 
-int main(int argc, char *argv[])
+using namespace std;
+
+int main()
 {
-    QCoreApplication a(argc, argv);
+    DungeonCrawler* game = new DungeonCrawler;
+    game->play();
 
-    return a.exec();
 }

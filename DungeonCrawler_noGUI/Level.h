@@ -2,10 +2,16 @@
 #define LEVEL_H
 
 #include <iostream>
+#include <array>
 #include <vector>
+#include <Character.h>
+#include <Tile.h>
 
 class Tile;
 class Character;
+
+#define numRows 4
+#define numColumns 4
 
 class Level
 {
@@ -22,14 +28,17 @@ public:
      *
      * all the dynamic Resources (Tiles, Character, etc.) which are created
      * will be rightly destroyed
+     *
+     * That means to delete all Elements of listCharacters vector
+     * as well as all Tiles in stage - 2 dimentional array
      */
     ~Level();
 
     /**
-     * @brief getTile
+     * @brief getTile returns bach the pointer to the Tile Object at the given coordinates
      * @param row
      * @param col
-     * @return
+     * @return pointer
      */
     Tile* getTile( int row, int col );
 
@@ -38,12 +47,31 @@ public:
     /**
      * @brief placeCharacter initialises Level:
      * puts the Character on the Tile object at the given coordinates
+     *
+     * --> To put the Character on a specific Tile means
+     * to assign the address (the pointer) of the specific Tile on the Character
+     * (Character should consist some attributes,
+     * among those there should be one of type Tile*)
+     *
+     *
+     * should take place without calling onEnter method
      */
     void placeCharacter( Character *c, int row, int col );
 
-private:
-    std::vector<std::vector<Tile*>> listTiles;//Array aus Kacheln
-    std::vector<Character*> listCharacter;//Array aus Figuren
+
+
+//private:
+    /**
+     * @brief stage(Spielwelt) is a matrix from Tile pointers,
+     * on which Character can move
+     * that matrix : 2 dimentional Array from Tiles (aus Kacheln)
+     */
+    std::array<std::array<Tile*, numRows>, numColumns> stage;
+    /**
+     * @brief stage
+     * List of Characters (Array aus Figuren)
+     */
+    std::vector<Character*> listCharacters;
     const int hight;// Höhe des Levels
     const int width;//Breite des Levels
 };

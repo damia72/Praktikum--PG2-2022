@@ -2,13 +2,24 @@
 #define TILE_H
 
 #include <iostream>
-
+#include"Character.h"
 class Character;
+class Level;
 class Tile
 {
 public:
-    explicit Tile();
-    virtual ~Tile();
+    /**
+     * @brief Tile
+     * @param stage
+     * @param r row_in
+     * @param c columm_in
+     */
+    explicit Tile(Level* stage, int row_in, int col_in)
+        :  currentLevel(stage), row(row_in), column(col_in)
+    {
+        character = nullptr;
+    }
+    //virtual ~Tile();
 
     /**
      * @brief getTexture prints out the Tiles on the console(Terminal)
@@ -21,7 +32,11 @@ public:
      * @return true if Character is on the tile,
      * else returns false
      */
+
+    int getRow() const;
+    int getCol() const;
     bool hasCharacter();
+    std::string getCharacterTexture();
 
     /**
      * @brief moveTo implements the movement of Character "who"
@@ -46,7 +61,7 @@ public:
      *
      *
      */
-    Tile* onEnter(Tile* fromTile, Character* who);
+    virtual Tile* onEnter(Tile* fromTile, Character* who) = 0;
 
     /**
      * @brief
@@ -60,22 +75,13 @@ public:
      * "this" (the current tile - starting Tile) if it is leftable
      *
      */
-    Tile* onLeave(Tile* destTile, Character* who);
+    virtual Tile* onLeave(Tile* destTile, Character* who)= 0;
 
     //getter and setter
     Character* getCharacter()
     {
         return character;
     }
-
-protected:
-    /**
-     * @brief texture is a string to save which kind of
-     * texture (Floor ".", Wall "#" or Portal"O" )
-     * In the ohne GUI version it will be used to
-     * print out a particular Zeichnen for each type of Tile
-     */
-    std::string texture;
 
     /**
      * @brief character is a pointer to the Character (Spielfigur)
@@ -85,12 +91,27 @@ protected:
      */
     Character* character;
 
+
+
+protected:
+    /**
+     * @brief texture is a string to save which kind of
+     * texture (Floor ".", Wall "#" or Portal"O" )
+     * In the ohne GUI version it will be used to
+     * print out a particular Zeichnen for each type of Tile
+     */
+    std::string texture;
+    /**
+     * @brief currentLevel shows on which Level the Character bzw. the Tile is on
+     */
+    Level* currentLevel;
     /**
      * @brief row & column are position of Tile on the Level (which one?)
      * These two are constant values and will not change over the lifetime of a Tile object
      */
-    const double row;
-    const double column;
+    const int row;
+    const int column;
+
 };
 
 /**
@@ -98,6 +119,17 @@ protected:
  */
 class Floor : virtual public Tile
 {
+public:
+
+    Floor(Level* stage, int row, int col)
+        : Tile(stage, row, col)
+    {
+        character = nullptr;
+        currentLevel = stage;
+        texture = ".";
+    }
+    Tile* onLeave(Tile *destTile, Character *who) override;
+    Tile* onEnter(Tile* fromTile, Character* who) override;
 
 };
 
@@ -106,7 +138,17 @@ class Floor : virtual public Tile
  */
 class Wall : virtual public Tile
 {
+public:
 
+    Wall(Level* stage, int row, int col)
+        : Tile(stage, row, col)
+    {
+        character = nullptr;
+        currentLevel = stage;
+        texture = "#";
+    }
+    Tile* onLeave(Tile *destTile, Character *who) override;
+    Tile* onEnter(Tile* fromTile, Character* who) override;
 };
 
 /**
@@ -114,6 +156,19 @@ class Wall : virtual public Tile
  */
 class Portal : virtual public Tile
 {
-
+public:
+    Portal(Level* stage,  int row, int col, Portal* port)
+        : Tile(stage, row, col)
+    {
+        connectedPortal = port;
+        character = nullptr;
+        currentLevel = stage;
+        texture = "O";
+    }
+    Tile* onLeave(Tile *destTile, Character *who) override;
+    Tile* onEnter(Tile* fromTile, Character* who) override;
+    void connectPortal(Portal* other);
+private:
+    Portal* connectedPortal;
 };
 #endif // TILE_H
