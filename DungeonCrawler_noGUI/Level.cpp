@@ -1,25 +1,30 @@
 #include "Level.h"
 
 Level::Level()
-    :hight(4), width(4)
 {
-    //a pair of Portals are still be created
-    for(int i = 0; i < numRows; i ++ ) {
-        for(int z = 0; z < numColumns; z++){
-           this->stage[i][z] = new Floor(this, i, z);
+    for(int row{}; row < numRows; ++row ) {
+        for(int col = 0; col < numColumns; ++col){
+           stage[row][col] = new Floor(this, row, col);
         }
     }
-    delete stage[1][1];
-    delete stage[3][3];
-    this->stage[1][1] = new Portal(this, 1, 1, nullptr);
 
-    Portal* newPort = dynamic_cast<Portal*>(this->stage[1][1]);
+    for(int row = 0; row < numRows; ++row ) {
+        for(int col = 0; col < numColumns; ++col){
+            if (row == 0 || row == numRows-1)
+            {
+                stage[row][col] = new Wall(this, row, col);
+            }
+            if (row >= 1 && row <= numColumns)
+            {
+                stage[row][0] = new Wall(this, row, col);
+                stage[row][numColumns-1] = new Wall(this, row, col);
+            }
+            std::cout << std::endl;
+        }
+    }
 
-    this->stage[1][1]= newPort;
-    this->stage[3][3] = new Portal(this, 3, 3, newPort);
-    Portal* newPort2 = dynamic_cast<Portal*>(this->stage[3][3]);
-    newPort2->connectPortal(newPort);
-    this->stage[3][3] = newPort2;
+    //a pair of Portals are still be created
+    // Character's position should also be initialised here too
 }
 
 Level::~Level()
@@ -27,11 +32,16 @@ Level::~Level()
     for(unsigned int i{}; i < listCharacters.size(); i++) {
         delete listCharacters.at(i);
     }
-    for(int row{}; row< numRows; ++row ) {
+    for(int row{}; row < numRows; ++row ) {
         for(int col{}; col < numColumns ; ++col) {
             delete stage[row][col];
         }
     }
+}
+
+Level::Level( const Level& level )
+{
+
 }
 
 Tile* Level::getTile(int row, int col)
@@ -57,7 +67,12 @@ void Level::placeCharacter(Character *c, int row, int col)
      *  IN Character there is a "currentTile" Attribute
      *  IN Tile there is a "character" Attribute
      */
-    c->currentTile = stage[row][col];
-    stage[row][col]->character = c;
+
+    //c->level = this;
+    Tile* temp = stage[row][col];
+    c->setTile(temp);
+    //c->setTile(this->getTile(row,col));
+    temp->setCharacter(c);
+    listCharacters.push_back(c);
 }
 

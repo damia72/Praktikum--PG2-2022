@@ -1,12 +1,13 @@
 #include "TerminalUI.h"
 
+TerminalUI::TerminalUI()
+{
+}
 
 void TerminalUI::draw(Level *level) {
-    for(int i{}; i < numRows; i++)
-    {
-        for(int z{}; z < numColumns; z++)
-        {
-            std::cout << level->getTile(i, z)->getCharacterTexture();
+    for(int row{}; row < numRows; ++row){
+        for(int col{}; col < numColumns; ++col){
+            std::cout << level->getTile(row, col)->getCharacterTexture();
         }
         std::cout << std::endl;
     }

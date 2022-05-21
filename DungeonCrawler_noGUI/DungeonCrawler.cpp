@@ -2,14 +2,17 @@
 
 DungeonCrawler::DungeonCrawler()
 {
-    currentLevel = new Level;
+    currentLevel = new Level();
     abstractUI = new TerminalUI;
 }
+
 void DungeonCrawler::play() {
-    Character* char1 = new Character;
-    this->currentLevel->placeCharacter(char1, 1, 3);
-    while(true) {
-        this->terminalUI->draw(this->currentLevel);
-        this->currentLevel->listCharacters.at(0)->move();
+    Character* character1 = new Character;
+    currentLevel->placeCharacter(character1, 2, 2);
+    while(true)
+    {
+        abstractUI->draw(currentLevel);
+        Character* tempCharacter = currentLevel->listCharacters.at(0);
+        tempCharacter->move(currentLevel);
     }
 }

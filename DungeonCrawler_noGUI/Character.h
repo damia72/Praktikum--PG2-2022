@@ -19,6 +19,7 @@ public:
      * It changes the Tile* of Character (currentTile)
      * when a movement takes place
      */
+    void setTile(Tile* destination);
 
 
     /**
@@ -31,14 +32,13 @@ public:
      *
      * @return the keys 1-9 (that's why integer), which was typed in by user
      */
-    int move();
-    void moveToTile(int row, int col);
+    int move(Level* currentLevel_in);
+    void moveToTile(Level* currentLevel_in, int row, int col);
 
 //private:
     std::string characterTexture;
     Level* level;
     Tile* currentTile;
-    Tile* previousTile;
 
 };
 

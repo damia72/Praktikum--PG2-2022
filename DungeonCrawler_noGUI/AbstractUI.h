@@ -7,8 +7,6 @@ class AbstractUI
 {
 public:
     AbstractUI();
-    virtual ~AbstractUI()
-    {};
     virtual void draw(Level*) = 0;
 };
 

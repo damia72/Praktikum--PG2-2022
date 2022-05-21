@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    DungeonCrawler* game = new DungeonCrawler;
-    game->play();
+    DungeonCrawler game;
+    game.play();
 
 }

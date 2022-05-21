@@ -3,11 +3,10 @@
 
 #include "AbstractUI.h"
 
-class TerminalUI : public AbstractUI
+class TerminalUI : virtual public AbstractUI
 {
 public:
     TerminalUI();
-    ~TerminalUI(){};
     void draw(Level* level) override;
 };
 

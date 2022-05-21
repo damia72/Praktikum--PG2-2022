@@ -19,7 +19,7 @@ public:
     {
         character = nullptr;
     }
-    //virtual ~Tile();
+    virtual ~Tile(){};
 
     /**
      * @brief getTexture prints out the Tiles on the console(Terminal)
@@ -32,11 +32,8 @@ public:
      * @return true if Character is on the tile,
      * else returns false
      */
-
-    int getRow() const;
-    int getCol() const;
     bool hasCharacter();
-    std::string getCharacterTexture();
+
 
     /**
      * @brief moveTo implements the movement of Character "who"
@@ -82,15 +79,13 @@ public:
     {
         return character;
     }
-
-    /**
-     * @brief character is a pointer to the Character (Spielfigur)
-     * if there is no Character --> = nullptr
-     * Through this pointer, the Tile can know which Character are standing on it
-     * (The Character also has a Tile* => he knows on which tile he is standing on)
-     */
-    Character* character;
-
+    void setCharacter(Character* c)
+    {
+        character = c;
+    }
+    int getRow() const;
+    int getCol() const;
+    std::string getCharacterTexture();
 
 
 protected:
@@ -111,6 +106,13 @@ protected:
      */
     const int row;
     const int column;
+    /**
+     * @brief character is a pointer to the Character (Spielfigur)
+     * if there is no Character --> = nullptr
+     * Through this pointer, the Tile can know which Character are standing on it
+     * (The Character also has a Tile* => he knows on which tile he is standing on)
+     */
+    Character* character;
 
 };
 

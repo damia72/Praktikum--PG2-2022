@@ -10,9 +10,8 @@
 class Tile;
 class Character;
 
-#define numRows 4
-#define numColumns 4
-
+static const int numRows = 10;// Höhe des Levels
+static const int numColumns = 10;//Breite des Levels
 class Level
 {
 public:
@@ -27,13 +26,18 @@ public:
      * @brief Destructor of class Level
      *
      * all the dynamic Resources (Tiles, Character, etc.) which are created
-     * will be rightly destroyed
+     * will be correctly destroyed
      *
      * That means to delete all Elements of listCharacters vector
      * as well as all Tiles in stage - 2 dimentional array
      */
     ~Level();
 
+    /**
+     * @brief Level copy constructor
+     * @param level
+     */
+    Level( const Level& level );
     /**
      * @brief getTile returns bach the pointer to the Tile Object at the given coordinates
      * @param row
@@ -61,19 +65,22 @@ public:
 
 
 //private:
+
+    /**
+     * @brief stage
+     * List of Characters (Array aus Figuren)
+     */
+    std::vector<Character*> listCharacters;
+
+
+//    const int numRows = 6;// Höhe des Levels
+//    const int numColumns = 6;//Breite des Levels
     /**
      * @brief stage(Spielwelt) is a matrix from Tile pointers,
      * on which Character can move
      * that matrix : 2 dimentional Array from Tiles (aus Kacheln)
      */
     std::array<std::array<Tile*, numRows>, numColumns> stage;
-    /**
-     * @brief stage
-     * List of Characters (Array aus Figuren)
-     */
-    std::vector<Character*> listCharacters;
-    const int hight;// Höhe des Levels
-    const int width;//Breite des Levels
 };
 
 #endif // LEVEL_H
