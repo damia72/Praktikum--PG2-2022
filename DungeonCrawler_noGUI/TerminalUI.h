@@ -2,7 +2,7 @@
 #define TERMINALUI_H
 
 #include "AbstractUI.h"
-
+#include "Level.h"
 class TerminalUI : virtual public AbstractUI
 {
 public:

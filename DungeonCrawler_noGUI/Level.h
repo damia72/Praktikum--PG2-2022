@@ -10,8 +10,8 @@
 class Tile;
 class Character;
 
-static const int numRows = 10;// Höhe des Levels
-static const int numColumns = 10;//Breite des Levels
+static const int numRows = 10; // Höhe des Levels
+static const int numColumns = 10; //Breite des Levels
 class Level
 {
 public:
