@@ -74,6 +74,7 @@ public:
      */
     virtual Tile* onLeave(Tile* destTile, Character* who)= 0;
 
+
     //getter and setter
     Character* getCharacter()
     {
@@ -159,17 +160,20 @@ public:
 class Portal : virtual public Tile
 {
 public:
-    Portal(Level* stage,  int row, int col, Portal* port)
+    //Portal(Level* stage,  int row, int col, Portal* port)
+    Portal(Level* stage,  int row, int col)
         : Tile(stage, row, col)
     {
-        connectedPortal = port;
+        //connectedPortal = port;
         character = nullptr;
         currentLevel = stage;
         texture = "O";
     }
     Tile* onLeave(Tile *destTile, Character *who) override;
     Tile* onEnter(Tile* fromTile, Character* who) override;
-    void connectPortal(Portal* other);
+
+    void setConnectedPortal(Portal *newConnectedPortal);
+
 private:
     Portal* connectedPortal;
 };

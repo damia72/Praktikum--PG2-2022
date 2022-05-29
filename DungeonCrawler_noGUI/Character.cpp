@@ -62,7 +62,7 @@ int Character::move(Level* currentLevel_in)
         break;
     default:
         std::cout << "Invalid Input!!" << std::endl;
-        move(currentLevel_in);
+        //move(currentLevel_in);
         break;
     }
     return movingKey;

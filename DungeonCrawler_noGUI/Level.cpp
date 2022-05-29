@@ -4,7 +4,7 @@ Level::Level()
 {
     for(int row{}; row < numRows; ++row ) {
         for(int col = 0; col < numColumns; ++col){
-           stage[row][col] = new Floor(this, row, col);
+            stage[row][col] = new Floor(this, row, col);
         }
     }
 
@@ -24,7 +24,33 @@ Level::Level()
     }
 
     //a pair of Portals are still be created
+
+    int row_P1 = 2, col_P1 = 2;
+    int row_P2 = 5, col_P2 = 5;
+/* Simon's version
+    delete stage[row_P1][col_P1];
+    delete stage[row_P2][col_P2];
+
+    Portal* P1   = new Portal(this, row_P1, col_P1);
+    stage[row_P1][col_P1] = P1;
+
+
+    Portal* P2   = new Portal(this, row_P2, col_P2);
+    stage[row_P2][col_P2] = P2;
+    P1->setConnectedPortal(P2);
+    P2->setConnectedPortal(P1);
+*/
+    stage[row_P1][col_P1] = new Portal(this, row_P1, col_P1);
+    stage[row_P2][col_P2] = new Portal(this, row_P2, col_P2);
+    Portal* P1 = dynamic_cast<Portal*>(stage[row_P1][col_P1]);
+    Portal* P2 = dynamic_cast<Portal*>(stage[row_P2][col_P2]);
+
+    P1->setConnectedPortal(P2);
+    P2->setConnectedPortal(P1);
+    std::cout<<"Test"<<std::endl;
     // Character's position should also be initialised here too
+    //this->placeCharacter()
+
 }
 
 Level::~Level()

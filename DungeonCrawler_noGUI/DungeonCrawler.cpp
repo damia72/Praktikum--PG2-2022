@@ -8,11 +8,14 @@ DungeonCrawler::DungeonCrawler()
 
 void DungeonCrawler::play() {
     Character* character1 = new Character;
-    currentLevel->placeCharacter(character1, 2, 2);
+    currentLevel->placeCharacter(character1, 1, 1);
     while(true)
     {
         abstractUI->draw(currentLevel);
         Character* tempCharacter = currentLevel->listCharacters.at(0);
-        tempCharacter->move(currentLevel);
+        int out = tempCharacter->move(currentLevel);
+        if (out == 0){
+            return;
+        }
     }
 }
